@@ -9,10 +9,10 @@
 
 using namespace std;
 
-class Dictionary
+class HashTable 
 {
  private:
-   vector<string> table;
+   vector<string> table = vector<string>(11);
    int size;
    int load;
    const double MAX_LOAD = 0.5;
@@ -39,16 +39,19 @@ class Dictionary
   // Postconditions: if key is found in the hash table, returns true; 
   //   otherwise returns false
 
-  void PrintSorted(ostream& outStream);
-  // Postconditions: has printed contents of the hash table in order
-
  private:
 
-  void HashTable(const HashTable& orig);
-  // copies the contents of orig to this dictionary
+  void copyTable(const HashTable& orig);
+  // copies the contents of orig to this hash table 
 
-  void deleteTable();
-  // properly frees all memory occupied by this hash table 
+  int hash(const string& key);
+  // evaluates a hash for a string
+
+  void reHash();
+  // rehashes the table to the next prime number that is at least twice the original
+
+  void nextPrime(int start);
+  // gets the next prime number that comes after the number provided
 
 };
 

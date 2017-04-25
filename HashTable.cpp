@@ -34,19 +34,20 @@ HashTable& HashTable::operator=(const HashTable& orig)
   return *this;
 }
 
-void HashTable::AddEntry(string anEntry)
+void HashTable::AddEntry(const string& anEntry)
 {
   if(table[hash(anEntry)] == "")
     table[hash(anEntry)] = anEntry;
   else {
     int i = 0;
-    for(; table[hash(anEntry) + i*i] != ""; i++);
+    for(; table[hash(anEntry) + i*i] != ""; i++); 
     table[hash(anEntry) + i*i] = anEntry;
-
+  }
   load++;
 }
 
-int HashTable::hash(string key) {
+int HashTable::hash(const string& key)
+{
   int hashVal = 0;
 
   for(int i=0; i<key.length(); i++) 
@@ -59,26 +60,29 @@ int HashTable::hash(string key) {
   return hashVal;
 }
 
-bool HashTable::FindEntry(string key) {
+bool HashTable::FindEntry(const string& key) 
+{
   for(int i=0; table[hash(key) + i*i] != ""; i++) {
     if (table[hash(key) + i*i] == key)
       return true;
   }
-  return false
+  return false;
 }
 
-void HashTable::reHash() {
+void HashTable::reHash() 
+{
   vector<string> temp = table;
   size = nextPrime(size*2);
   table.clear();
   table.resize(size);
   load = 0;
-  for(string word : temp) {
-    if(word != "") insert(temp[i]); 
+  for(string word : temp)
+    if(word != "") AddEntry(word); 
 }
  
 
-int HashTable::nextPrine(int start) {
+int HashTable::nextPrime(int start) 
+{
   for(int i=start+1; true; i++) {
     bool isPrime = true;
     for(int j=2; j < i/2; j++) {

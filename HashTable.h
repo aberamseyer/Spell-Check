@@ -31,11 +31,11 @@ class HashTable
   HashTable& operator=(const HashTable& orig);
   // assignment operator
 
-  void AddEntry(string anEntry);
+  void AddEntry(const string& anEntry);
   // Preconditions: anEntry has a key not already in the hash table 
   // Postconditions: anEntry has been added to the hash table 
 
-  bool FindEntry(string key);
+  bool FindEntry(const string& key);
   // Postconditions: if key is found in the hash table, returns true; 
   //   otherwise returns false
 
@@ -50,7 +50,7 @@ class HashTable
   void reHash();
   // rehashes the table to the next prime number that is at least twice the original
 
-  void nextPrime(int start);
+  int nextPrime(int start);
   // gets the next prime number that comes after the number provided
 
 };

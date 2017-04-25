@@ -2,12 +2,12 @@
 #include <fstream>
 #include <string>
 #include <vector>
-#include "Dictionary.h"
+#include "HashTable.h"
 
 bool readFromTestFile(std::string& dictFileName);
 bool buildDictionary(std::string& dictFileName);
 
-Dictionary dict; // declare data structure
+HashTable dict; // declare data structure
 std::vector<std::string> testData;  // input data to check for misspellings
 
 int main(int argc, char* argv[]) {

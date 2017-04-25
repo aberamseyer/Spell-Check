@@ -39,6 +39,10 @@ class HashTable
   // Postconditions: if key is found in the hash table, returns true; 
   //   otherwise returns false
 
+  void PrintSorted(ostream& outstream);
+  // prints the hash table contents to the specified output stream.
+  // The table will NOT be in order because it is hashed
+
  private:
 
   void copyTable(const HashTable& orig);

@@ -14,7 +14,7 @@ HashTable::HashTable()
 
 HashTable::HashTable(const HashTable& orig)
 {
-  this->copyTable(orig);
+  table = orig.table;
 }
 
 HashTable::~HashTable()
@@ -54,6 +54,7 @@ int HashTable::hash(const string& key)
     hashVal = 37 * hashVal + key[i];
 
   hashVal %= size;
+
   if(hashVal < 0)
     hashVal += size;
 
@@ -67,6 +68,16 @@ bool HashTable::FindEntry(const string& key)
       return true;
   }
   return false;
+}
+
+void HashTable::PrintSorted(ostream& outstream)
+{
+  outstream << endl;
+  for(string item : table) {
+      if(item != "")
+      outstream << item << endl;
+  }
+  outstream << endl;
 }
 
 void HashTable::reHash() 

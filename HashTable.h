@@ -5,55 +5,50 @@
 
 #include <iostream>
 #include <string>
+#include <vector>
 
 using namespace std;
-
-struct AVLTreeNode
-{
-  string data;
-  int height;
-  AVLTreeNode* left;
-  AVLTreeNode* right;
-};
 
 class Dictionary
 {
  private:
-  AVLTreeNode* root;
-  int size;
+   vector<string> table;
+   int size;
+   int load;
+   const double MAX_LOAD = 0.5;
 
  public:
 
-  Dictionary();
-  // Creates an empty dictionary;
+  HashTable();
+  // Creates an empty hash table
 
-  Dictionary(const Dictionary& orig);
+  HashTable(const HashTable& orig);
   // Copy constructor
 
-  virtual ~Dictionary();
+  virtual ~HashTable();
   // Destructor
 
-  Dictionary& operator=(const Dictionary& orig);
+  HashTable& operator=(const HashTable& orig);
   // assignment operator
 
   void AddEntry(string anEntry);
-  // Preconditions: anEntry has a key not already in the dictionary
-  // Postconditions: anEntry has been added to the dictionary
+  // Preconditions: anEntry has a key not already in the hash table 
+  // Postconditions: anEntry has been added to the hash table 
 
   bool FindEntry(string key);
-  // Postconditions: if key is found in the dictionary, returns true; 
+  // Postconditions: if key is found in the hash table, returns true; 
   //   otherwise returns false
 
   void PrintSorted(ostream& outStream);
-  // Postconditions: has printed contents of the dictionary in order
+  // Postconditions: has printed contents of the hash table in order
 
  private:
 
-  void copyDict(const Dictionary& orig);
+  void HashTable(const HashTable& orig);
   // copies the contents of orig to this dictionary
 
-  void deleteDict();
-  // properly frees all memory occupied by this Dictionary
+  void deleteTable();
+  // properly frees all memory occupied by this hash table 
 
 };
 

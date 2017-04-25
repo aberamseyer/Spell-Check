@@ -1,7 +1,14 @@
+
+CC = g++ 
+FLAGS = -std=c++11
+
 all:
-	g++ -std=c++11 Dictionary.cpp Dictionary.h spell-check-avl.cpp -o avl
+	${CC} ${FLAGS} Dictionary.cpp Dictionary.h spell-check-avl.cpp -o avl
 hash:
-	g++ -std=c++11 HashTable.cpp HashTable.h spell-check-hash.cpp -o hash
+	${CC} ${FLAGS} HashTable.cpp HashTable.h spell-check-hash.cpp -o hash
 clean:
 	rm hash
 	rm avl
+debug:
+	${CC} ${FLAGS} -g HashTable.cpp HashTable.h spell-check-hash.cpp -o hash 
+	gdb ./hash dict.txt inputForTesting.txt

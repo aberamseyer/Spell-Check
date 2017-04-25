@@ -31,7 +31,7 @@ int main(int argc, char* argv[]) {
   else
     std::cout << "Couldn't open file for reading\n";
 
-  dict.PrintSorted(std::cout);
+  //dict.PrintSorted(std::cout);
 
   return 0;
 }
@@ -46,6 +46,8 @@ bool readFromTestFile(std::string& dictFileName) {
     std::string line;
     while(getline(dictFile, line)) {
       dict.AddEntry(line); // insert into testing data structure
+      dict.PrintSorted(cout);
+      cout << "=====================================" << endl;
     }
     dictFile.close();
     return true;

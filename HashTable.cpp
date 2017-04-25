@@ -36,14 +36,20 @@ HashTable& HashTable::operator=(const HashTable& orig)
 
 void HashTable::AddEntry(const string& anEntry)
 {
-  if(table[hash(anEntry)] == "")
-    table[hash(anEntry)] = anEntry;
+  int location = hash(anEntry);
+
+  if(table[location] == "")
+    table[location] = anEntry;
   else {
-    int i = 0;
-    for(; table[hash(anEntry) + i*i] != ""; i++); 
-    table[hash(anEntry) + i*i] = anEntry;
+    for(int i=0; table[location] != ""; i++) {
+      location = (location + i*i) % size; 
+    }
+    table[location] = anEntry;
   }
   load++;
+  
+  if((double) load/size >= MAX_LOAD)
+    reHash();
 }
 
 int HashTable::hash(const string& key)
@@ -63,21 +69,26 @@ int HashTable::hash(const string& key)
 
 bool HashTable::FindEntry(const string& key) 
 {
-  for(int i=0; table[hash(key) + i*i] != ""; i++) {
-    if (table[hash(key) + i*i] == key)
+  int location = hash(key);
+
+  for(int i=0; table[location] != ""; i++) { 
+    if (table[location] == key)
       return true;
+    location = (location + i*i) % size;
   }
   return false;
 }
 
 void HashTable::PrintSorted(ostream& outstream)
 {
+  int i = 0;
   outstream << endl;
   for(string item : table) {
-      if(item != "")
-      outstream << item << endl;
+//  if(item != "")
+      outstream << i << ": " << item << endl;
+      i++;
   }
-  outstream << endl;
+  outstream << "load: " << load << ", size: " << size << ", ratio: " << ((double) load/size) << endl;
 }
 
 void HashTable::reHash() 
@@ -88,7 +99,8 @@ void HashTable::reHash()
   table.resize(size);
   load = 0;
   for(string word : temp)
-    if(word != "") AddEntry(word); 
+    if(word != "")
+      AddEntry(word); 
 }
  
 
@@ -102,6 +114,7 @@ int HashTable::nextPrime(int start)
 	break;
       }
     }
-    if (isPrime) return i;
+    if (isPrime) 
+      return i;
   }
 }

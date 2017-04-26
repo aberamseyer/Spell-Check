@@ -2,6 +2,7 @@
 #include <fstream>
 #include <string>
 #include <vector>
+#include <algorithm>
 #include "HashTable.h"
 
 bool readFromTestFile(std::string& dictFileName);
@@ -45,9 +46,7 @@ bool readFromTestFile(std::string& dictFileName) {
   if(dictFile.is_open()) {
     std::string line;
     while(getline(dictFile, line)) {
-      dict.AddEntry(line); // insert into testing data structure
-      dict.PrintSorted(cout);
-      cout << "=====================================" << endl;
+      testData.push_back(line); 
     }
     dictFile.close();
     return true;
@@ -66,8 +65,13 @@ bool buildDictionary(std::string& dictFileName) {
     std::string line;
     while(getline(dictFile, line)) {
       // insert into dictionary data structure
+      transform(line.begin(), line.end(), line.begin(), ::tolower);
+      dict.AddEntry(line); 
+      //dict.PrintSorted(cout);
+      //cout << "=====================================" << endl;
     }
     dictFile.close();
+    dict.PrintSorted(cout);
     return true;
   }
   else

@@ -5,6 +5,9 @@
 #include <algorithm>
 #include "HashTable.h"
 
+void testTwo();
+void testThree();
+
 bool readFromTestFile(std::string& dictFileName);
 bool buildDictionary(std::string& dictFileName);
 
@@ -29,39 +32,64 @@ int main(int argc, char* argv[]) {
   // read words from input file provided
   if (readFromTestFile(testFileName) && buildDictionary(dictFileName)) {
     // do test cases
-    // Test 1
-
-
-    // Test 2
-    /* For each string in test data */
-    for (std::string toTest : testData) {
-      for (int i = 0; i < toTest.size(); i++) {
-        string a = toTest;
-        a.erase(i, 1);
-        if (dict.FindEntry(a)) {
-          foundWords.push_back(a);
-        }
-      }
-    }
-
-
-    // Test 3
-    for (std::string toTest : testData) {
-      for (int i = 0; i < (toTest.size() - 1); i++) {
-        string a = toTest;
-        swap(a[i], a[i+1]);
-        if (dict.FindEntry(a)) {
-          foundWords.push_back(a);
-        }
-      }
-    }
+    testTwo();
+    testThree();
   }
   else
     std::cout << "Couldn't open file for reading\n";
 
   //dict.PrintSorted(std::cout);
 
+  std::cout << "Fixed words" << std::endl << std::endl;
+  for (std::string a : foundWords) {
+    std::cout << a << std::endl;
+  }
+
   return 0;
+}
+
+void testTwo() {
+  // Test 2
+  for (std::string toTest : testData) {
+    for (int i = 0; i < toTest.size(); i++) {
+      string a = toTest;
+      a.erase(i, 1);
+      for (int j = 0; j < a.size(); j++) {
+        if (a[j] == ' ') {
+          a.erase(j, 1);
+        }
+      }
+      if (dict.FindEntry(a)) {
+        foundWords.push_back(a);
+      }
+
+      a = toTest;
+
+      // else {
+      //   testThree(a);
+      // }
+    }
+  }
+}
+
+void testThree() {
+  // Test 3
+  for (std::string toTest : testData) {
+    for (int i = 0; i < (toTest.size() - 1); i++) {
+      std::string a = toTest;
+      std::swap(a[i], a[i+1]);
+      for (int j = 0; j < a.size(); j++) {
+        if (a[j] == ' ') {
+          a.erase(j, 1);
+        }
+      }
+      if (dict.FindEntry(a)) {
+        foundWords.push_back(a);
+      }
+
+      a = toTest;
+    }
+  }
 }
 
 /*
@@ -73,6 +101,7 @@ bool readFromTestFile(std::string& dictFileName) {
   if(dictFile.is_open()) {
     std::string line;
     while(getline(dictFile, line)) {
+      transform(line.begin(), line.end(), line.begin(), ::tolower);
       testData.push_back(line);
     }
     dictFile.close();

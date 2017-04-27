@@ -9,7 +9,7 @@ void addLetter(std::string& inputString);
 void testTwo();
 void testThree();
 
-bool readFromTestFile(std::string& dictFileName);
+bool readFromTestFile(std::string& testFileName);
 bool buildDictionary(std::string& dictFileName);
 
 HashTable dict; // declare data structure
@@ -131,15 +131,15 @@ void testThree() {
  * Reads all the text from the specified input file name
  * returns true if successful
  */
-bool readFromTestFile(std::string& dictFileName) {
-  std::ifstream dictFile(dictFileName);
-  if(dictFile.is_open()) {
+bool readFromTestFile(std::string& testFileName) {
+  std::ifstream testFile(testFileName);
+  if(testFile.is_open()) {
     std::string line;
-    while(getline(dictFile, line)) {
+    while(getline(testFile, line)) {
       transform(line.begin(), line.end(), line.begin(), ::tolower);
       testData.push_back(line);
     }
-    dictFile.close();
+    testFile.close();
     return true;
   }
   else
@@ -157,7 +157,8 @@ bool buildDictionary(std::string& dictFileName) {
     while(getline(dictFile, line)) {
       // insert into dictionary data structure
       transform(line.begin(), line.end(), line.begin(), ::tolower);
-      dict.AddEntry(line);
+      if(!dict.FindEntry(line))
+        dict.AddEntry(line);
       //dict.PrintSorted(cout);
       //cout << "=====================================" << endl;
     }

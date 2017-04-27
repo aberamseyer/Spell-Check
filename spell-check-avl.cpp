@@ -4,7 +4,7 @@
 #include <vector>
 #include "Dictionary.h"
 
-bool readFromTestFile(std::string& dictFileName);
+bool readFromTestFile(std::string& testFileName);
 bool buildDictionary(std::string& dictFileName);
 
 Dictionary dict; // declare data structure
@@ -40,14 +40,14 @@ int main(int argc, char* argv[]) {
  * Reads all the text from the specified input file name
  * returns true if successful
  */
-bool readFromTestFile(std::string& dictFileName) {
-  std::ifstream dictFile(dictFileName);
-  if(dictFile.is_open()) {
+bool readFromTestFile(std::string& testFileName) {
+  std::ifstream testFile(testFileName);
+  if(testFile.is_open()) {
     std::string line;
-    while(getline(dictFile, line)) {
-      dict.AddEntry(line); // insert into testing data structure
+    while(getline(testFile, line)) {
+      testData.push_back(line); // insert into testing data structure
     }
-    dictFile.close();
+    testFile.close();
     return true;
   }
   else
@@ -64,6 +64,8 @@ bool buildDictionary(std::string& dictFileName) {
     std::string line;
     while(getline(dictFile, line)) {
       // insert into dictionary data structure
+      if(!dict.FindEntry(line))
+        dict.AddEntry(line);
     }
     dictFile.close();
     return true;

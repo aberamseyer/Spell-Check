@@ -6,6 +6,8 @@
 #include <iostream>
 #include <string>
 #include <vector>
+#include <algorithm>
+#include <fstream>
 
 using namespace std;
 
@@ -43,6 +45,7 @@ class HashTable
   // prints the hash table contents to the specified output stream.
   // The table will NOT be in order because it is hashed
 
+  void output();
  private:
 
   void copyTable(const HashTable& orig);

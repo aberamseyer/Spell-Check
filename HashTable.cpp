@@ -42,6 +42,7 @@ void HashTable::AddEntry(const string& anEntry)
     table[location] = anEntry;
   else {
     for(int i=0; table[location] != ""; i++) {
+      if(table[location] == anEntry) return; // don't insert a duplicate
       location = (location + i*i) % size; 
     }
     table[location] = anEntry;
@@ -83,11 +84,10 @@ void HashTable::PrintSorted(ostream& outstream)
 {
   int i = 0;
   outstream << endl;
-  for(string item : table) {
-//  if(item != "")
-      outstream << i << ": " << item << endl;
-      i++;
-  }
+  //for(string item : table) {
+  //  outstream << i << ": " << item << endl;
+  //    i++;
+  //}
   outstream << "load: " << load << ", size: " << size << ", ratio: " << ((double) load/size) << endl;
 }
 

@@ -1,8 +1,6 @@
 #include <iostream>
-#include <fstream>
 #include <string>
 #include <vector>
-#include <algorithm>
 #include "HashTable.h"
 
 bool readFromTestFile(std::string& dictFileName);
@@ -77,3 +75,4 @@ bool buildDictionary(std::string& dictFileName) {
   else
     return false;
 }
+

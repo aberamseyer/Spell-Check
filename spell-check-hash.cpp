@@ -55,32 +55,32 @@ int main(int argc, char* argv[]) {
 
 void addLetter(std::string& inputString)
 {
-	int asciiValue; // 'a' has ascii value 97, 'z' has ascii value of 122.
-	bool found = false;
-	char asciiCharacter;
-	std::string characterToInsert;
-	std::string testString = inputString;
+  int asciiValue; // 'a' has ascii value 97, 'z' has ascii value of 122.
+  bool found = false;
+  char asciiCharacter;
+  std::string characterToInsert;
+  std::string testString = inputString;
   for (int j = 0; j < testString.size(); j++) {
     if (testString[j] == ' ') {
       testString.erase(j, 1);
     }
   }
-	for (int index = 0; index < inputString.size(); index++)
-	{
-		for (asciiValue = 97; asciiValue < 123; asciiValue++)
-		{
-			asciiCharacter = static_cast<char>(asciiValue);
-			characterToInsert = string(1, asciiCharacter);
-			testString = testString.insert(index, characterToInsert);
-			found = dict.FindEntry(testString);
-			if (found)
-			{
-				foundWords.push_back(testString);
-			}
+  for (int index = 0; index < inputString.size(); index++)
+  {
+    for (asciiValue = 97; asciiValue < 123; asciiValue++)
+    {
+      asciiCharacter = static_cast<char>(asciiValue);
+      characterToInsert = string(1, asciiCharacter);
+      testString = testString.insert(index, characterToInsert);
+      found = dict.FindEntry(testString);
+      if (found)
+      {
+        foundWords.push_back(testString);
+      }
       testString.erase(index, 1);
       testString = inputString;
-		}
-	}
+    }
+  }
 }
 
 void testTwo() {

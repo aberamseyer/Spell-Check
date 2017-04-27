@@ -60,14 +60,18 @@ bool readFromTestFile(std::string& testFileName) {
  */
 bool buildDictionary(std::string& dictFileName) {
   std::ifstream dictFile(dictFileName);
+  int count = 0;
   if(dictFile.is_open()) {
     std::string line;
     while(getline(dictFile, line)) {
       // insert into dictionary data structure
-      if(!dict.FindEntry(line))
+      if(!dict.FindEntry(line)) {
+        count++;
         dict.AddEntry(line);
+      }
     }
     dictFile.close();
+    cout << "Total load: " << count << endl;
     return true;
   }
   else

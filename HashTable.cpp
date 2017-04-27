@@ -37,13 +37,14 @@ HashTable& HashTable::operator=(const HashTable& orig)
 void HashTable::AddEntry(const string& anEntry)
 {
   int location = hash(anEntry);
+  int original = location;
 
   if(table[location] == "")
     table[location] = anEntry;
   else {
-    for(int i=0; table[location] != ""; i++) {
+    for(int i=1; table[location] != ""; i++) {
       //if(table[location] == anEntry) return; // don't insert a duplicate
-      location = (location + i*i) % size; 
+      location = (original + i*i) % size; 
     }
     table[location] = anEntry;
   }
@@ -71,11 +72,12 @@ int HashTable::hash(const string& key)
 bool HashTable::FindEntry(const string& key) 
 {
   int location = hash(key);
+  int original = location;
 
   for(int i=0; table[location] != ""; i++) { 
     if (table[location] == key)
       return true;
-    location = (location + i*i) % size;
+    location = (original + i*i) % size;
   }
   return false;
 }

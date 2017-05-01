@@ -31,7 +31,7 @@ int main(int argc, char* argv[]) {
   else
     std::cout << "Couldn't open file for reading\n";
 
-  dict.PrintSorted(std::cout);
+  //dict.PrintSorted(std::cout);
 
   return 0;
 }

@@ -10,39 +10,41 @@ HashTable::HashTable()
 {
   size = 11;
   load = 0;
+  table = new string[size];
+  std::fill_n(table, size, "0");
 }
 
-HashTable::HashTable(const HashTable& orig)
-{
-  table = orig.table;
-}
+//HashTable::HashTable(const HashTable& orig)
+//{
+//  table = orig.table;
+//}
 
 HashTable::~HashTable()
 {
-  table.clear();
+  delete[] table; //table.clear();
   size = 11;
   load = 0;
-  vector<string>().swap(table);
+//  vector<string>().swap(table);
 }
 
-HashTable& HashTable::operator=(const HashTable& orig)
-{
-  table = orig.table;
-  size = orig.size;
-  load = orig.load;
-
-  return *this;
-}
+//HashTable& HashTable::operator=(const HashTable& orig)
+//{
+//  table = orig.table;
+//  size = orig.size;
+//  load = orig.load;
+// 
+//  return *this;
+//}
 
 void HashTable::AddEntry(const string& anEntry)
 {
   int location = hash(anEntry);
   int original = location;
 
-  if(table[location] == "")
+  if(table[location] == "0")
     table[location] = anEntry;
   else {
-    for(int i=1; table[location] != ""; i++) {
+    for(int i=1; table[location] != "0"; i++) {
       //if(table[location] == anEntry) return; // don't insert a duplicate
       location = (original + i*i) % size; 
     }
@@ -74,7 +76,7 @@ bool HashTable::FindEntry(const string& key)
   int location = hash(key);
   int original = location;
 
-  for(int i=0; table[location] != ""; i++) {
+  for(int i=0; table[location] != "0"; i++) { 
     if (table[location] == key)
       return true;
     location = (original + i*i) % size;
@@ -87,27 +89,33 @@ void HashTable::PrintSorted(ostream& outstream)
   int i = 0;
   int count = 0;
   outstream << endl;
-  for(string item : table) {
-   std::cout << i << ": " << item << std::endl;
-   if (item != "") {
-     count++;
-   }
-   i++;
-  }
+//  for(string item : table) {
+//   std::cout << i << ": " << item << std::endl;
+//   if (item != "") {
+//     count++;
+//   }
+//   i++;
+//  }
   std::cout << "Final number of values in table is: " << count << std::endl;
   outstream << "load: " << load << ", size: " << size << ", ratio: " << ((double) load/size) << endl;
 }
 
 void HashTable::reHash()
 {
-  vector<string> temp = table;
+  string* temp = table;
+  int tempNum = size;
+//  vector<string> temp = table;
   size = nextPrime(size*2);
-  table.clear();
-  table.resize(size);
+//  table.clear();
+//  table.resize(size);
+  table = new string[size];
+  std::fill_n(table, size, "0");
   load = 0;
-  for(string word : temp)
-    if(word != "")
-      AddEntry(word);
+  for(int i=0; i < tempNum; i++)
+    if(temp[i] != "0")
+      AddEntry(temp[i]); 
+  delete[] temp;
+  temp = NULL;
 }
 
 

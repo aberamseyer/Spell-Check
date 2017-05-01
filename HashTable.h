@@ -5,7 +5,7 @@
 
 #include <iostream>
 #include <string>
-#include <vector>
+//#include <vector>
 #include <algorithm>
 #include <fstream>
 
@@ -14,7 +14,7 @@ using namespace std;
 class HashTable 
 {
  private:
-   vector<string> table = vector<string>(11);
+   string* table;//vector<string> table = vector<string>(11);
    int size;
    int load;
    const double MAX_LOAD = 0.5;
@@ -24,13 +24,13 @@ class HashTable
   HashTable();
   // Creates an empty hash table
 
-  HashTable(const HashTable& orig);
+//  HashTable(const HashTable& orig);
   // Copy constructor
 
   virtual ~HashTable();
   // Destructor
 
-  HashTable& operator=(const HashTable& orig);
+//  HashTable& operator=(const HashTable& orig);
   // assignment operator
 
   void AddEntry(const string& anEntry);

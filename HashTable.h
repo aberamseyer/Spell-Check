@@ -14,7 +14,7 @@ using namespace std;
 class HashTable 
 {
  private:
-   string* table;//vector<string> table = vector<string>(11);
+   string* table;
    int size;
    int load;
    const double MAX_LOAD = 0.5;

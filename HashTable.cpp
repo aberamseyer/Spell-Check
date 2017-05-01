@@ -21,10 +21,9 @@ HashTable::HashTable()
 
 HashTable::~HashTable()
 {
-  delete[] table; //table.clear();
+  delete[] table;
   size = 11;
   load = 0;
-//  vector<string>().swap(table);
 }
 
 //HashTable& HashTable::operator=(const HashTable& orig)
@@ -45,7 +44,6 @@ void HashTable::AddEntry(const string& anEntry)
     table[location] = anEntry;
   else {
     for(int i=1; table[location] != "0"; i++) {
-      //if(table[location] == anEntry) return; // don't insert a duplicate
       location = (original + i*i) % size; 
     }
     table[location] = anEntry;
@@ -104,10 +102,7 @@ void HashTable::reHash()
 {
   string* temp = table;
   int tempNum = size;
-//  vector<string> temp = table;
   size = nextPrime(size*2);
-//  table.clear();
-//  table.resize(size);
   table = new string[size];
   std::fill_n(table, size, "0");
   load = 0;

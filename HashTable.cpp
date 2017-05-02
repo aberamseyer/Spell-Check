@@ -30,7 +30,7 @@ HashTable& HashTable::operator=(const HashTable& orig)
   table = orig.table;
   size = orig.size;
   load = orig.load;
- 
+
   return *this;
 }
 
@@ -49,7 +49,7 @@ void HashTable::AddEntry(const string& anEntry)
     table[location] = anEntry;
   }
   load++;
-  
+
   if((double) load/size >= MAX_LOAD)
     reHash();
 }
@@ -58,7 +58,7 @@ int HashTable::hash(const string& key)
 {
   int hashVal = 0;
 
-  for(int i=0; i<key.length(); i++) 
+  for(int i=0; i<key.length(); i++)
     hashVal = 37 * hashVal + key[i];
 
   hashVal %= size;
@@ -69,12 +69,12 @@ int HashTable::hash(const string& key)
   return hashVal;
 }
 
-bool HashTable::FindEntry(const string& key) 
+bool HashTable::FindEntry(const string& key)
 {
   int location = hash(key);
   int original = location;
 
-  for(int i=0; table[location] != ""; i++) { 
+  for(int i=0; table[location] != ""; i++) {
     if (table[location] == key)
       return true;
     location = (original + i*i) % size;
@@ -85,15 +85,20 @@ bool HashTable::FindEntry(const string& key)
 void HashTable::PrintSorted(ostream& outstream)
 {
   int i = 0;
+  int count = 0;
   outstream << endl;
-  //for(string item : table) {
-  //  outstream << i << ": " << item << endl;
-  //  i++;
-  //}
+  for(string item : table) {
+   std::cout << i << ": " << item << std::endl;
+   if (item != "") {
+     count++;
+   }
+   i++;
+  }
+  std::cout << "Final number of values in table is: " << count << std::endl;
   outstream << "load: " << load << ", size: " << size << ", ratio: " << ((double) load/size) << endl;
 }
 
-void HashTable::reHash() 
+void HashTable::reHash()
 {
   vector<string> temp = table;
   size = nextPrime(size*2);
@@ -102,11 +107,11 @@ void HashTable::reHash()
   load = 0;
   for(string word : temp)
     if(word != "")
-      AddEntry(word); 
+      AddEntry(word);
 }
- 
 
-int HashTable::nextPrime(int start) 
+
+int HashTable::nextPrime(int start)
 {
   for(int i=start+1; true; i++) {
     bool isPrime = true;
@@ -116,7 +121,7 @@ int HashTable::nextPrime(int start)
 	break;
       }
     }
-    if (isPrime) 
+    if (isPrime)
       return i;
   }
 }

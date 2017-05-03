@@ -44,14 +44,22 @@ int main(int argc, char* argv[]) {
     std::cout << "Couldn't open file for reading\n";
 
   //dict.PrintSorted(std::cout);
+
   outfile << "Fixed words" << std::endl << std::endl;
   int count = 0;
   for (std::string a : foundWords) {
     outfile << a << std::endl;
     count++;
   }
+  //std::cout << "Fixed words" << std::endl << std::endl;
+  //int count = 0;
+  //for (std::string a : foundWords) {
+  //  outfile << a << std::endl;
+  //  count++;
+  //}
 
-  std::cout << "Total fixed is: " << count << std::endl;
+
+  //std::cout << "Total fixed is: " << count << std::endl;
 
   return 0;
 }
@@ -154,6 +162,7 @@ bool buildDictionary(std::string& dictFileName) {
   if(dictFile.is_open()) {
     std::string line;
     while(getline(dictFile, line)) {
+      transform(line.begin(), line.end(), line.begin(), ::tolower);
       // insert into dictionary data structure
       if(!dict.FindEntry(line)) {
         count++;

@@ -44,14 +44,14 @@ int main(int argc, char* argv[]) {
 
   //dict.PrintSorted(std::cout);
 
-  std::cout << "Fixed words" << std::endl << std::endl;
-  int count = 0;
-  for (std::string a : foundWords) {
-    std::cout << a << std::endl;
-    count++;
-  }
+  //std::cout << "Fixed words" << std::endl << std::endl;
+  //int count = 0;
+  //for (std::string a : foundWords) {
+  //  std::cout << a << std::endl;
+  //  count++;
+  //}
 
-  std::cout << "Total fixed is: " << count << std::endl;
+  //std::cout << "Total fixed is: " << count << std::endl;
 
   return 0;
 }

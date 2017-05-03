@@ -14,26 +14,35 @@ HashTable::HashTable()
   std::fill_n(table, size, "0");
 }
 
-//HashTable::HashTable(const HashTable& orig)
-//{
-//  table = orig.table;
-//}
+HashTable::HashTable(const HashTable& orig)
+{
+  delete[] table;
+  table = new string[orig.size];
+  for(int i = 0; i < orig.size; i++)
+    table[i] = orig.table[i];
+  size = orig.size;
+  load = orig.load;
+}
 
 HashTable::~HashTable()
 {
   delete[] table;
+  table = NULL;
   size = 11;
   load = 0;
 }
 
-//HashTable& HashTable::operator=(const HashTable& orig)
-//{
-//  table = orig.table;
-//  size = orig.size;
-//  load = orig.load;
-//
-//  return *this;
-//}
+HashTable& HashTable::operator=(const HashTable& orig)
+{
+  delete[] table;
+  table = new string[orig.size];
+  for(int i = 0; i < orig.size; i++)
+    table[i] = orig.table[i];
+  size = orig.size;
+  load = orig.load;
+
+  return *this;
+}
 
 void HashTable::AddEntry(const string& anEntry)
 {

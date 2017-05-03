@@ -5,7 +5,6 @@
 
 #include <iostream>
 #include <string>
-//#include <vector>
 #include <algorithm>
 #include <fstream>
 
@@ -24,13 +23,13 @@ class HashTable
   HashTable();
   // Creates an empty hash table
 
-//  HashTable(const HashTable& orig);
+  HashTable(const HashTable& orig);
   // Copy constructor
 
   virtual ~HashTable();
   // Destructor
 
-//  HashTable& operator=(const HashTable& orig);
+  HashTable& operator=(const HashTable& orig);
   // assignment operator
 
   void AddEntry(const string& anEntry);

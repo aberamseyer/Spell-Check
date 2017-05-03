@@ -40,18 +40,25 @@ void HashTable::AddEntry(const string& anEntry)
   int location = hash(anEntry);
   int original = location;
 
-  if(table[location] == "0")
+  if(table[location] == "0") {
     table[location] = anEntry;
+    load++;
+  }
   else {
     for(int i=1; table[location] != "0"; i++) {
       location = (original + i*i) % size;
     }
     table[location] = anEntry;
+    load++;
   }
-  load++;
+  
+  //for(int i=0; i < size; i++) 
+  //  cout << i << ": " << table[i] << endl;
+  //cout << "==================================load: " << load << endl;
 
   if((double) load/size >= MAX_LOAD)
     reHash();
+
 }
 
 int HashTable::hash(const string& key)
@@ -84,33 +91,30 @@ bool HashTable::FindEntry(const string& key)
 
 void HashTable::PrintSorted(ostream& outstream)
 {
-  int i = 0;
+ // int i = 0;
   // int count = 0;
-  outstream << endl;
-// <<<<<<< Updated upstream
-// //  for(string item : table) {
-// //   std::cout << i << ": " << item << std::endl;
-// //   if (item != "") {
-// //     count++;
-// //   }
-// //   i++;
-// //  }
-//   std::cout << "Final number of values in table is: " << count << std::endl;
-// =======
-//   // for(string item : table) {
-//   //  std::cout << i << ": " << item << std::endl;
-//   //  if (item != "") {
-//   //    count++;
-//   //  }
-//   //  i++;
-//   // }
-//   // std::cout << "Final number of values in table is: " << count << std::endl;
-// >>>>>>> Stashed changes
+ //  for(string item : table) {
+ //   std::cout << i << ": " << item << std::endl;
+ //   if (item != "") {
+ //     count++;
+ //   }
+ //   i++;
+ //  }
+//    for(int i = 0; i < size; i++) {
+//      if(table[i] != "0")
+//        std::cout << table[i] << std::endl;
+     //if (item != "0") {
+     //  count++;
+     //}
+     //i++;
+//    }
+  //  std::cout << "Final number of values in table is: " << count << std::endl;
   outstream << "load: " << load << ", size: " << size << ", ratio: " << ((double) load/size) << endl;
 }
 
 void HashTable::reHash()
 {
+  //cout << "=====REHASHING======" << endl;
   string* temp = table;
   int tempNum = size;
   size = nextPrime(size*2);
@@ -122,6 +126,7 @@ void HashTable::reHash()
       AddEntry(temp[i]);
   delete[] temp;
   temp = NULL;
+  //cout << "=======rehashed at size:=========" << tempNum << endl;
 }
 
 

@@ -31,7 +31,7 @@ HashTable::~HashTable()
 //  table = orig.table;
 //  size = orig.size;
 //  load = orig.load;
-// 
+//
 //  return *this;
 //}
 
@@ -44,7 +44,7 @@ void HashTable::AddEntry(const string& anEntry)
     table[location] = anEntry;
   else {
     for(int i=1; table[location] != "0"; i++) {
-      location = (original + i*i) % size; 
+      location = (original + i*i) % size;
     }
     table[location] = anEntry;
   }
@@ -74,7 +74,7 @@ bool HashTable::FindEntry(const string& key)
   int location = hash(key);
   int original = location;
 
-  for(int i=0; table[location] != "0"; i++) { 
+  for(int i=0; table[location] != "0"; i++) {
     if (table[location] == key)
       return true;
     location = (original + i*i) % size;
@@ -85,16 +85,27 @@ bool HashTable::FindEntry(const string& key)
 void HashTable::PrintSorted(ostream& outstream)
 {
   int i = 0;
-  int count = 0;
+  // int count = 0;
   outstream << endl;
-//  for(string item : table) {
-//   std::cout << i << ": " << item << std::endl;
-//   if (item != "") {
-//     count++;
-//   }
-//   i++;
-//  }
-  std::cout << "Final number of values in table is: " << count << std::endl;
+// <<<<<<< Updated upstream
+// //  for(string item : table) {
+// //   std::cout << i << ": " << item << std::endl;
+// //   if (item != "") {
+// //     count++;
+// //   }
+// //   i++;
+// //  }
+//   std::cout << "Final number of values in table is: " << count << std::endl;
+// =======
+//   // for(string item : table) {
+//   //  std::cout << i << ": " << item << std::endl;
+//   //  if (item != "") {
+//   //    count++;
+//   //  }
+//   //  i++;
+//   // }
+//   // std::cout << "Final number of values in table is: " << count << std::endl;
+// >>>>>>> Stashed changes
   outstream << "load: " << load << ", size: " << size << ", ratio: " << ((double) load/size) << endl;
 }
 
@@ -108,7 +119,7 @@ void HashTable::reHash()
   load = 0;
   for(int i=0; i < tempNum; i++)
     if(temp[i] != "0")
-      AddEntry(temp[i]); 
+      AddEntry(temp[i]);
   delete[] temp;
   temp = NULL;
 }

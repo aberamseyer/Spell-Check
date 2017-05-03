@@ -32,7 +32,6 @@ int main(int argc, char* argv[]) {
 
   // read words from input file provided
   if (readFromTestFile(testFileName) && buildDictionary(dictFileName)) {
-    // do test cases
     for (int index = 0; index < testData.size(); index++) // Add to the line in main with comment "do test cases"
 	  {
 		    addLetter(testData.at(index));
@@ -81,7 +80,6 @@ void addLetter(std::string& inputString)
       {
         foundWords.push_back(testString);
       }
-      testString.erase(index, 1);
       testString = inputString;
     }
   }
@@ -103,10 +101,6 @@ void testTwo() {
       }
 
       a = toTest;
-
-      // else {
-      //   testThree(a);
-      // }
     }
   }
 }

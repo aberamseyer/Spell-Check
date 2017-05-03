@@ -16,6 +16,7 @@ HashTable dict; // declare data structure
 std::vector<std::string> testData;  // input data to check for misspellings
 std::vector<std::string> foundWords;
 std::ofstream outfile("another.txt");
+int num = 0;
 
 int main(int argc, char* argv[]) {
 
@@ -37,8 +38,14 @@ int main(int argc, char* argv[]) {
 	  {
 		    addLetter(testData.at(index));
 	  }
+    std::cout << "Finished with first test." << std::endl;
+    num = 0;
     testTwo();
+    std::cout << "Second test finished"<< std::endl;
+    num = 0;
     testThree();
+    std::cout << "Third test finished" << std::endl;
+    num = 0;
   }
   else
     std::cout << "Couldn't open file for reading\n";
@@ -77,7 +84,10 @@ void addLetter(std::string& inputString)
       found = dict.FindEntry(testString);
       if (found)
       {
+        // std::cout << testString << std::endl;
+        if (std::find(foundWords.begin(), foundWords.end(), testString) == foundWords.end()) {
         foundWords.push_back(testString);
+      }
       }
       testString = inputString;
     }
@@ -96,7 +106,9 @@ void testTwo() {
         }
       }
       if (dict.FindEntry(a)) {
+        if (std::find(foundWords.begin(), foundWords.end(), a) == foundWords.end()) {
         foundWords.push_back(a);
+      }
       }
 
       a = toTest;
@@ -107,7 +119,7 @@ void testTwo() {
 void testThree() {
   // Test 3
   for (std::string toTest : testData) {
-    for (int i = 0; i < (toTest.size() - 1); i++) {
+    for (int i = 0; i < toTest.size(); i++) {
       std::string a = toTest;
       std::swap(a[i], a[i+1]);
       for (int j = 0; j < a.size(); j++) {
@@ -116,12 +128,13 @@ void testThree() {
         }
       }
       if (dict.FindEntry(a)) {
-        foundWords.push_back(a);
+        if (std::find(foundWords.begin(), foundWords.end(), a) == foundWords.end()) {
+          foundWords.push_back(a);
+        }
       }
-
       a = toTest;
+      }
     }
-  }
 }
 
 /*

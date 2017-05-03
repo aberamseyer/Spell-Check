@@ -77,7 +77,10 @@ void addLetter(std::string& inputString)
       found = dict.FindEntry(testString);
       if (found)
       {
+        // std::cout << testString << std::endl;
+        if (std::find(foundWords.begin(), foundWords.end(), testString) == foundWords.end()) {
         foundWords.push_back(testString);
+      }
       }
       testString = inputString;
     }
@@ -96,7 +99,9 @@ void testTwo() {
         }
       }
       if (dict.FindEntry(a)) {
+        if (std::find(foundWords.begin(), foundWords.end(), a) == foundWords.end()) {
         foundWords.push_back(a);
+      }
       }
 
       a = toTest;
@@ -107,7 +112,7 @@ void testTwo() {
 void testThree() {
   // Test 3
   for (std::string toTest : testData) {
-    for (int i = 0; i < (toTest.size() - 1); i++) {
+    for (int i = 0; i < toTest.size(); i++) {
       std::string a = toTest;
       std::swap(a[i], a[i+1]);
       for (int j = 0; j < a.size(); j++) {
@@ -116,12 +121,13 @@ void testThree() {
         }
       }
       if (dict.FindEntry(a)) {
-        foundWords.push_back(a);
+        if (std::find(foundWords.begin(), foundWords.end(), a) == foundWords.end()) {
+          foundWords.push_back(a);
+        }
       }
-
       a = toTest;
+      }
     }
-  }
 }
 
 /*

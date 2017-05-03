@@ -11,4 +11,4 @@ clean:
 	rm -f avl
 debug:
 	${CC} ${FLAGS} -g HashTable.cpp HashTable.h spell-check-hash.cpp -o hash 
-	gdb ./hash dict.txt inputForTesting.txt
+	gdb ./hash bigdict.txt testone.txt

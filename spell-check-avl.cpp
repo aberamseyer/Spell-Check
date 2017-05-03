@@ -43,21 +43,12 @@ int main(int argc, char* argv[]) {
   else
     std::cout << "Couldn't open file for reading\n";
 
-  //dict.PrintSorted(std::cout);
-
   outfile << "Fixed words" << std::endl << std::endl;
   int count = 0;
   for (std::string a : foundWords) {
     outfile << a << std::endl;
     count++;
   }
-  //std::cout << "Fixed words" << std::endl << std::endl;
-  //int count = 0;
-  //for (std::string a : foundWords) {
-  //  outfile << a << std::endl;
-  //  count++;
-  //}
-
 
   std::cout << "Total fixed is: " << count << std::endl;
 

@@ -15,7 +15,7 @@ bool buildDictionary(std::string& dictFileName);
 HashTable dict; // declare data structure
 std::vector<std::string> testData;  // input data to check for misspellings
 std::vector<std::string> foundWords;
-std::ofstream outfile("outfile.txt");
+std::ofstream outfile("another.txt");
 
 int main(int argc, char* argv[]) {
 
@@ -43,8 +43,6 @@ int main(int argc, char* argv[]) {
   else
     std::cout << "Couldn't open file for reading\n";
 
-  //dict.PrintSorted(std::cout);
-
   outfile << "Fixed words" << std::endl << std::endl;
   int count = 0;
   for (std::string a : foundWords) {
@@ -52,14 +50,7 @@ int main(int argc, char* argv[]) {
     count++;
   }
 
-  //std::cout << "Fixed words" << std::endl << std::endl;
-  //int count = 0;
-  //for (std::string a : foundWords) {
-  //  std::cout << a << std::endl;
-  //  count++;
-  //}
-
-  //std::cout << "Total fixed is: " << count << std::endl;
+  std::cout << "Total fixed is: " << count << std::endl;
 
   return 0;
 }
@@ -165,8 +156,6 @@ bool buildDictionary(std::string& dictFileName) {
       transform(line.begin(), line.end(), line.begin(), ::tolower);
       if(!dict.FindEntry(line))
         dict.AddEntry(line);
-      //dict.PrintSorted(cout);
-      //cout << "=====================================" << endl;
     }
     dictFile.close();
     dict.PrintSorted(cout);

@@ -37,8 +37,8 @@ int main(int argc, char* argv[]) {
 	  {
 		    addLetter(testData.at(index));
 	  }
-    // testTwo();
-    // testThree();
+    testTwo();
+    testThree();
   }
   else
     std::cout << "Couldn't open file for reading\n";
@@ -59,7 +59,7 @@ int main(int argc, char* argv[]) {
   //}
 
 
-  //std::cout << "Total fixed is: " << count << std::endl;
+  std::cout << "Total fixed is: " << count << std::endl;
 
   return 0;
 }

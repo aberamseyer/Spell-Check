@@ -9,7 +9,6 @@ void addLetter(std::string& inputString, int lineNumber);
 void testTwo(int lineNumber);
 void testThree(int lineNumber);
 
-bool readFromTestFile(std::string& testFileName);
 bool buildDictionary(std::string& dictFileName);
 
 HashTable dict; // declare data structure
@@ -17,7 +16,7 @@ std::vector<std::string> testData;  // input data to check for misspellings
 std::vector<std::string> foundWords;
 std::vector<std::string> original;
 std::vector<std::string> change;
-std::vector<int> line;
+int changeCount = 0;
 
 int main() {
 
@@ -49,7 +48,6 @@ int main() {
         transform(line.begin(), line.end(), line.begin(), ::tolower); // change to lower case
         testData.push_back(line);
 
-
         for (int index = 0; index < testData.size(); index++) // Add to the line in main with comment "do test cases"
 	      {
 		      addLetter(testData.at(index), lineNumber);
@@ -64,6 +62,8 @@ int main() {
           count++;
         }
 
+        std::cout << "\n";
+
         testData.clear();
         foundWords.clear();
         original.clear();
@@ -75,11 +75,7 @@ int main() {
   else
     std::cout << "Couldn't open file for reading\n";
 }
-
-
-
-
-  std::cout << "\nTotal fixed is: " << count << std::endl;
+  std::cout << "\nTotal fixed is: " << changeCount << std::endl;
 
   return 0;
 }
@@ -108,6 +104,7 @@ void addLetter(std::string& inputString, int lineNumber)
       if (found)
       {
           foundWords.push_back(testString);
+          changeCount++;
           original.push_back(inputString);
           std::string toChange = "added: " + characterToInsert + " at line " + to_string(lineNumber);
           change.push_back(toChange);
@@ -133,6 +130,7 @@ void testTwo(int lineNumber) {
       }
       if (dict.FindEntry(a)) {
           foundWords.push_back(a);
+          changeCount++;
           original.push_back(toTest);
           std::string toChange = "removed: " + characterToInsert + " at line " + to_string(lineNumber);
           change.push_back(toChange);
@@ -161,6 +159,7 @@ void testThree(int lineNumber) {
       }
       if (dict.FindEntry(a)) {
           foundWords.push_back(a);
+          changeCount++;
           original.push_back(toTest);
           std::string toChange = "swapped: " + leftChar + " and " + rightChar + " at line " + to_string(lineNumber);
           change.push_back(toChange);
@@ -170,25 +169,6 @@ void testThree(int lineNumber) {
     }
       }
     }
-}
-
-/*
- * Reads all the text from the specified input file name
- * returns true if successful
- */
-bool readFromTestFile(std::string& testFileName) {
-  std::ifstream testFile(testFileName);
-  if(testFile.is_open()) {
-    std::string line;
-    while(getline(testFile, line)) {
-      transform(line.begin(), line.end(), line.begin(), ::tolower);
-      testData.push_back(line);
-    }
-    testFile.close();
-    return true;
-  }
-  else
-    return false;
 }
 
 /*
@@ -206,7 +186,7 @@ bool buildDictionary(std::string& dictFileName) {
         dict.AddEntry(line);
     }
     dictFile.close();
-    dict.PrintSorted(cout);
+    // dict.PrintSorted(cout);
     return true;
   }
   else

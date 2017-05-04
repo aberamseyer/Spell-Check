@@ -106,7 +106,7 @@ void HashTable::PrintSorted(ostream& outstream)
        sorted.push_back(table[i]);
    }
 
-  //  std::sort(sorted.begin(), sorted.end(), sorted);
+   std::sort(sorted.begin(), sorted.end());
    for(std::string a : sorted) {
      std::cout << a << std::endl;
    }

@@ -1,4 +1,7 @@
 #include <iostream>
+#include <cstring>
+#include <iterator>
+#include <sstream>
 #include <fstream>
 #include <string>
 #include <vector>
@@ -46,7 +49,14 @@ int main() {
       std::string line;
       while(getline(testFile, line)) {
         transform(line.begin(), line.end(), line.begin(), ::tolower); // change to lower case
-        testData.push_back(line);
+
+	char chars[] = "<>?:\\\"{}|+_)(*&^%$#@!~`1234567890-=[]\';/.,";
+        for(unsigned int i = 0; i < strlen(chars); i++)
+          line.erase(remove(line.begin(), line.end(), chars[i]), line.end());
+        istringstream iss;
+        iss.str(line);
+        copy(istream_iterator<string>(iss), istream_iterator<string>(), back_inserter(testData));
+
 
         for (int index = 0; index < testData.size(); index++) // Add to the line in main with comment "do test cases"
 	      {
@@ -63,7 +73,6 @@ int main() {
         }
 
         std::cout << "\n";
-
         testData.clear();
         foundWords.clear();
         original.clear();
@@ -101,7 +110,7 @@ void addLetter(std::string& inputString, int lineNumber)
       characterToInsert = string(1, asciiCharacter);
       testString = testString.insert(index, characterToInsert);
       found = dict.FindEntry(testString);
-      if (found)
+      if (found && testString != "")
       {
           foundWords.push_back(testString);
           changeCount++;
@@ -128,7 +137,7 @@ void testTwo(int lineNumber) {
           a.erase(j, 1);
         }
       }
-      if (dict.FindEntry(a)) {
+      if (dict.FindEntry(a) && a != "") {
           foundWords.push_back(a);
           changeCount++;
           original.push_back(toTest);
@@ -157,7 +166,7 @@ void testThree(int lineNumber) {
           a.erase(j, 1);
         }
       }
-      if (dict.FindEntry(a)) {
+      if (dict.FindEntry(a) && a != "") {
           foundWords.push_back(a);
           changeCount++;
           original.push_back(toTest);

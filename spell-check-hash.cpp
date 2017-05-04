@@ -1,4 +1,7 @@
 #include <iostream>
+#include <cstring>
+#include <iterator>
+#include <sstream>
 #include <fstream>
 #include <string>
 #include <vector>
@@ -47,8 +50,12 @@ int main() {
       std::string line;
       while(getline(testFile, line)) {
         transform(line.begin(), line.end(), line.begin(), ::tolower); // change to lower case
-        testData.push_back(line);
-
+	char chars[] = "<>?:\\\"{}|+_)(*&^%$#@!~`1234567890-=[]\';/.,";
+        for(unsigned int i = 0; i < strlen(chars); i++)
+          line.erase(remove(line.begin(), line.end(), chars[i]), line.end());         
+        istringstream iss;
+        iss.str(line);
+        copy(istream_iterator<string>(iss), istream_iterator<string>(), back_inserter(testData));
 
         for (int index = 0; index < testData.size(); index++) // Add to the line in main with comment "do test cases"
 	      {
@@ -206,7 +213,7 @@ bool buildDictionary(std::string& dictFileName) {
         dict.AddEntry(line);
     }
     dictFile.close();
-    dict.PrintSorted(cout);
+//    dict.PrintSorted(cout);
     return true;
   }
   else

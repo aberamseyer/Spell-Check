@@ -5,9 +5,9 @@
 #include <algorithm>
 #include "HashTable.h"
 
-void addLetter(std::string& inputString);
-void testTwo();
-void testThree();
+void addLetter(std::string& inputString, int lineNumber);
+void testTwo(int lineNumber);
+void testThree(int lineNumber);
 
 bool readFromTestFile(std::string& testFileName);
 bool buildDictionary(std::string& dictFileName);
@@ -22,6 +22,7 @@ std::vector<int> line;
 int main() {
 
   // name files for building and outputting
+  int count = 0;
   std::string dictFileName = "bigdict.txt";
   std::string testFileName;
   std::cout << "Enter a file to spell check: ";
@@ -29,39 +30,61 @@ int main() {
 
   std::cout << std::endl;
 
+  int lineNumber = 1;
   // read words from input file provided
-  if (readFromTestFile(testFileName) && buildDictionary(dictFileName)) {
+  if (buildDictionary(dictFileName)) {
     std::cout << std::endl;
-    for (int index = 0; index < testData.size(); index++) // Add to the line in main with comment "do test cases"
-	  {
-		    addLetter(testData.at(index));
-	  }
-    testTwo();
-    testThree();
+
+    /** OUTPUT GOES HERE */
+    std::cout << "Fixed words" << std::endl << "___________\n\n";
+    std::cout.width(25); std::cout << std::left << "Misspelled Word";
+    std::cout.width(25); std::cout << std::left << "Corrected Word";
+    std::cout.width(15); std::cout << std::left << "Changed Letter\n";
+    std::cout << "|||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||\n";
+
+    std::ifstream testFile(testFileName);
+    if(testFile.is_open()) {
+      std::string line;
+      while(getline(testFile, line)) {
+        transform(line.begin(), line.end(), line.begin(), ::tolower); // change to lower case
+        testData.push_back(line);
+
+
+        for (int index = 0; index < testData.size(); index++) // Add to the line in main with comment "do test cases"
+	      {
+		      addLetter(testData.at(index), lineNumber);
+	      }
+        testTwo(lineNumber);
+        testThree(lineNumber);
+        count = 0;
+        for (std::string a : foundWords) {
+          std::cout.width(25); std::cout << std::left << original[count];
+          std::cout.width(25); std::cout << std::left << a;
+          std::cout.width(8); std::cout << std::left << change[count] << std::endl;
+          count++;
+        }
+
+        testData.clear();
+        foundWords.clear();
+        original.clear();
+        change.clear();
+        lineNumber++;
+      }
+    testFile.close();
   }
   else
     std::cout << "Couldn't open file for reading\n";
+}
 
-  /** OUTPUT GOES HERE */
-  std::cout << "Fixed words" << std::endl << "___________\n\n";
-  std::cout.width(25); std::cout << std::left << "Misspelled Word";
-  std::cout.width(25); std::cout << std::left << "Corrected Word";
-  std::cout.width(15); std::cout << std::left << "Changed Letter\n";
-  std::cout << "|||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||\n";
-  int count = 0;
-  for (std::string a : foundWords) {
-    std::cout.width(25); std::cout << std::left << original[count];
-    std::cout.width(25); std::cout << std::left << a;
-    std::cout.width(8); std::cout << std::left << change[count] << std::endl;
-    count++;
-  }
+
+
 
   std::cout << "\nTotal fixed is: " << count << std::endl;
 
   return 0;
 }
 
-void addLetter(std::string& inputString)
+void addLetter(std::string& inputString, int lineNumber)
 {
   int asciiValue; // 'a' has ascii value 97, 'z' has ascii value of 122.
   bool found = false;
@@ -73,6 +96,7 @@ void addLetter(std::string& inputString)
       testString.erase(j, 1);
     }
   }
+
   for (int index = 0; index < inputString.size(); index++)
   {
     for (asciiValue = 97; asciiValue < 123; asciiValue++)
@@ -85,7 +109,7 @@ void addLetter(std::string& inputString)
       {
           foundWords.push_back(testString);
           original.push_back(inputString);
-          std::string toChange = "added: " + characterToInsert;
+          std::string toChange = "added: " + characterToInsert + " at line " + to_string(lineNumber);
           change.push_back(toChange);
       }
       testString = inputString;
@@ -93,7 +117,7 @@ void addLetter(std::string& inputString)
   }
 }
 
-void testTwo() {
+void testTwo(int lineNumber) {
   // Test 2
   std::string characterToInsert;
   for (std::string toTest : testData) {
@@ -110,7 +134,7 @@ void testTwo() {
       if (dict.FindEntry(a)) {
           foundWords.push_back(a);
           original.push_back(toTest);
-          std::string toChange = "removed: " + characterToInsert;
+          std::string toChange = "removed: " + characterToInsert + " at line " + to_string(lineNumber);
           change.push_back(toChange);
       }
 
@@ -119,7 +143,7 @@ void testTwo() {
   }
 }
 
-void testThree() {
+void testThree(int lineNumber) {
   // Test 3
   std::string leftChar;
   std::string rightChar;
@@ -138,7 +162,7 @@ void testThree() {
       if (dict.FindEntry(a)) {
           foundWords.push_back(a);
           original.push_back(toTest);
-          std::string toChange = "swapped: " + leftChar + " and " + rightChar;
+          std::string toChange = "swapped: " + leftChar + " and " + rightChar + " at line " + to_string(lineNumber);
           change.push_back(toChange);
       }
 

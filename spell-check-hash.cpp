@@ -52,7 +52,6 @@ int main() {
     std::cout.width(25); std::cout << std::left << original[count];
     std::cout.width(25); std::cout << std::left << a;
     std::cout.width(8); std::cout << std::left << change[count] << std::endl;
-    // std::cout << a << std::endl;
     count++;
   }
 

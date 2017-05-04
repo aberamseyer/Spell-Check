@@ -7,10 +7,11 @@
 #include <string>
 #include <algorithm>
 #include <fstream>
+#include <vector>
 
 using namespace std;
 
-class HashTable 
+class HashTable
 {
  private:
    string* table;
@@ -33,11 +34,11 @@ class HashTable
   // assignment operator
 
   void AddEntry(const string& anEntry);
-  // Preconditions: anEntry has a key not already in the hash table 
-  // Postconditions: anEntry has been added to the hash table 
+  // Preconditions: anEntry has a key not already in the hash table
+  // Postconditions: anEntry has been added to the hash table
 
   bool FindEntry(const string& key);
-  // Postconditions: if key is found in the hash table, returns true; 
+  // Postconditions: if key is found in the hash table, returns true;
   //   otherwise returns false
 
   void PrintSorted(ostream& outstream);
@@ -48,7 +49,7 @@ class HashTable
  private:
 
   void copyTable(const HashTable& orig);
-  // copies the contents of orig to this hash table 
+  // copies the contents of orig to this hash table
 
   int hash(const string& key);
   // evaluates a hash for a string

@@ -100,25 +100,17 @@ bool HashTable::FindEntry(const string& key)
 
 void HashTable::PrintSorted(ostream& outstream)
 {
- // int i = 0;
-  // int count = 0;
- //  for(string item : table) {
- //   std::cout << i << ": " << item << std::endl;
- //   if (item != "") {
- //     count++;
- //   }
- //   i++;
- //  }
-//    for(int i = 0; i < size; i++) {
-//      if(table[i] != "0")
-//        std::cout << table[i] << std::endl;
-     //if (item != "0") {
-     //  count++;
-     //}
-     //i++;
-//    }
-  //  std::cout << "Final number of values in table is: " << count << std::endl;
-  outstream << "load: " << load << ", size: " << size << ", ratio: " << ((double) load/size) << endl;
+  std::vector<std::string> sorted;
+   for(int i = 0; i < size; i++) {
+     if(table[i] != "0")
+       sorted.push_back(table[i]);
+   }
+
+  //  std::sort(sorted.begin(), sorted.end(), sorted);
+   for(std::string a : sorted) {
+     std::cout << a << std::endl;
+   }
+  // outstream << "load: " << load << ", size: " << size << ", ratio: " << ((double) load/size) << endl;
 }
 
 void HashTable::reHash()

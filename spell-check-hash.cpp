@@ -17,6 +17,7 @@ std::vector<std::string> testData;  // input data to check for misspellings
 std::vector<std::string> foundWords;
 std::vector<std::string> original;
 std::vector<std::string> change;
+std::vector<int> line;
 
 int main() {
 
@@ -82,12 +83,10 @@ void addLetter(std::string& inputString)
       found = dict.FindEntry(testString);
       if (found)
       {
-        if (std::find(foundWords.begin(), foundWords.end(), testString) == foundWords.end()) {
           foundWords.push_back(testString);
           original.push_back(inputString);
           std::string toChange = "added: " + characterToInsert;
           change.push_back(toChange);
-        }
       }
       testString = inputString;
     }
@@ -109,12 +108,10 @@ void testTwo() {
         }
       }
       if (dict.FindEntry(a)) {
-        if (std::find(foundWords.begin(), foundWords.end(), a) == foundWords.end()) {
           foundWords.push_back(a);
           original.push_back(toTest);
           std::string toChange = "removed: " + characterToInsert;
           change.push_back(toChange);
-        }
       }
 
       a = toTest;
@@ -131,6 +128,7 @@ void testThree() {
       std::string a = toTest;
       leftChar = a[i];
       rightChar = a[i+1];
+      if (leftChar != rightChar) {
       std::swap(a[i], a[i+1]);
       for (int j = 0; j < a.size(); j++) {
         if (a[j] == ' ') {
@@ -138,14 +136,14 @@ void testThree() {
         }
       }
       if (dict.FindEntry(a)) {
-        if (std::find(foundWords.begin(), foundWords.end(), a) == foundWords.end()) {
           foundWords.push_back(a);
           original.push_back(toTest);
           std::string toChange = "swapped: " + leftChar + " and " + rightChar;
           change.push_back(toChange);
-        }
       }
+
       a = toTest;
+    }
       }
     }
 }

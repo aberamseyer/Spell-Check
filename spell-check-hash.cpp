@@ -15,49 +15,48 @@ bool buildDictionary(std::string& dictFileName);
 HashTable dict; // declare data structure
 std::vector<std::string> testData;  // input data to check for misspellings
 std::vector<std::string> foundWords;
-std::ofstream outfile("another.txt");
-int num = 0;
+std::vector<std::string> original;
+std::vector<std::string> change;
 
-int main(int argc, char* argv[]) {
+int main() {
 
-  // grab command line argument for filenames
-  std::string execName = argv[0];
-  std::string dictFileName;
+  // name files for building and outputting
+  std::string dictFileName = "bigdict.txt";
   std::string testFileName;
+  std::cout << "Enter a file to spell check: ";
+  cin >> testFileName;
 
-  if (argc == 3) {
-    dictFileName = argv[1];
-    testFileName = argv[2];
-  }
-  else
-    std::cout << "Syntax error, input and output file names required\n";
+  std::cout << std::endl;
 
   // read words from input file provided
   if (readFromTestFile(testFileName) && buildDictionary(dictFileName)) {
+    std::cout << std::endl;
     for (int index = 0; index < testData.size(); index++) // Add to the line in main with comment "do test cases"
 	  {
 		    addLetter(testData.at(index));
 	  }
-    std::cout << "Finished with first test." << std::endl;
-    num = 0;
     testTwo();
-    std::cout << "Second test finished"<< std::endl;
-    num = 0;
     testThree();
-    std::cout << "Third test finished" << std::endl;
-    num = 0;
   }
   else
     std::cout << "Couldn't open file for reading\n";
 
-  outfile << "Fixed words" << std::endl << std::endl;
+  /** OUTPUT GOES HERE */
+  std::cout << "Fixed words" << std::endl << "___________\n\n";
+  std::cout.width(25); std::cout << std::left << "Misspelled Word";
+  std::cout.width(25); std::cout << std::left << "Corrected Word";
+  std::cout.width(15); std::cout << std::left << "Changed Letter\n";
+  std::cout << "|||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||\n";
   int count = 0;
   for (std::string a : foundWords) {
-    outfile << a << std::endl;
+    std::cout.width(25); std::cout << std::left << original[count];
+    std::cout.width(25); std::cout << std::left << a;
+    std::cout.width(8); std::cout << std::left << change[count] << std::endl;
+    // std::cout << a << std::endl;
     count++;
   }
 
-  std::cout << "Total fixed is: " << count << std::endl;
+  std::cout << "\nTotal fixed is: " << count << std::endl;
 
   return 0;
 }
@@ -84,10 +83,12 @@ void addLetter(std::string& inputString)
       found = dict.FindEntry(testString);
       if (found)
       {
-        // std::cout << testString << std::endl;
         if (std::find(foundWords.begin(), foundWords.end(), testString) == foundWords.end()) {
-        foundWords.push_back(testString);
-      }
+          foundWords.push_back(testString);
+          original.push_back(inputString);
+          std::string toChange = "added: " + characterToInsert;
+          change.push_back(toChange);
+        }
       }
       testString = inputString;
     }
@@ -96,9 +97,12 @@ void addLetter(std::string& inputString)
 
 void testTwo() {
   // Test 2
+  std::string characterToInsert;
   for (std::string toTest : testData) {
     for (int i = 0; i < toTest.size(); i++) {
       string a = toTest;
+      characterToInsert = string(1, a[i]);
+      char c = a[i];
       a.erase(i, 1);
       for (int j = 0; j < a.size(); j++) {
         if (a[j] == ' ') {
@@ -107,8 +111,11 @@ void testTwo() {
       }
       if (dict.FindEntry(a)) {
         if (std::find(foundWords.begin(), foundWords.end(), a) == foundWords.end()) {
-        foundWords.push_back(a);
-      }
+          foundWords.push_back(a);
+          original.push_back(toTest);
+          std::string toChange = "removed: " + characterToInsert;
+          change.push_back(toChange);
+        }
       }
 
       a = toTest;
@@ -118,9 +125,13 @@ void testTwo() {
 
 void testThree() {
   // Test 3
+  std::string leftChar;
+  std::string rightChar;
   for (std::string toTest : testData) {
     for (int i = 0; i < toTest.size(); i++) {
       std::string a = toTest;
+      leftChar = a[i];
+      rightChar = a[i+1];
       std::swap(a[i], a[i+1]);
       for (int j = 0; j < a.size(); j++) {
         if (a[j] == ' ') {
@@ -130,6 +141,9 @@ void testThree() {
       if (dict.FindEntry(a)) {
         if (std::find(foundWords.begin(), foundWords.end(), a) == foundWords.end()) {
           foundWords.push_back(a);
+          original.push_back(toTest);
+          std::string toChange = "swapped: " + leftChar + " and " + rightChar;
+          change.push_back(toChange);
         }
       }
       a = toTest;

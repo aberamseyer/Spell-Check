@@ -60,8 +60,8 @@ void HashTable::AddEntry(const string& anEntry)
     table[location] = anEntry;
     load++;
   }
-  
-  //for(int i=0; i < size; i++) 
+
+  //for(int i=0; i < size; i++)
   //  cout << i << ": " << table[i] << endl;
   //cout << "==================================load: " << load << endl;
 
